@@ -14,10 +14,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jessevdk/go-flags"
 	"github.com/decred/dcrd/chaincfg"
 	"github.com/decred/dcrd/dcrutil"
 	"github.com/decred/slog"
+	"github.com/jessevdk/go-flags"
 )
 
 const (
@@ -37,7 +37,6 @@ var (
 	defaultRPCPortMainNet = "9109"
 	defaultRPCPortTestNet = "19109"
 	defaultRPCPortSimNet  = "19556"
-	defaultAPIHost        = "localhost"
 	defaultAPIPort        = "3333"
 	defaultLogDir         = filepath.Join(minerHomeDir, defaultLogDirname)
 	defaultAutocalibrate  = 500
@@ -133,16 +132,6 @@ func normalizeAddresses(addrs []string, defaultPort string) []string {
 	}
 
 	return removeDuplicateAddresses(addrs)
-}
-
-// filesExists reports whether the named file or directory exists.
-func fileExists(name string) bool {
-	if _, err := os.Stat(name); err != nil {
-		if os.IsNotExist(err) {
-			return false
-		}
-	}
-	return true
 }
 
 // validLogLevel returns whether or not logLevel is a valid debug log level.

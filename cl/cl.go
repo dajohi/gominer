@@ -93,7 +93,7 @@ const (
 	CL_HUGE_VAL  = 1e500
 	CL_MAXFLOAT  = CL_FLT_MAX
 	CL_INFINITY  = CL_HUGE_VALF
-	CL_NAN       = (CL_INFINITY - CL_INFINITY)
+	CL_NAN       = 0
 )
 
 ////////////////////////////////////////////////////////////////

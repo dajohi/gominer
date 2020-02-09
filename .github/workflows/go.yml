@@ -14,12 +14,16 @@ jobs:
           go-version: ${{ matrix.go }}
       - name: Check out source
         uses: actions/checkout@v1
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install opencl-headers nvidia-opencl-dev
       - name: Install Linters
         run: "curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.23.3"
       - name: Build
         env:
           GO111MODULE: "on"
-        run: go build -tags opencl ./...
+        run: go build -tags opencl
       - name: Test
         env:
           GO111MODULE: "on"

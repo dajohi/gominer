@@ -23,10 +23,10 @@ import (
 
 	"github.com/davecgh/go-spew/spew"
 
-	"github.com/decred/go-socks/socks"
 	"github.com/decred/dcrd/chaincfg"
 	"github.com/decred/dcrd/chaincfg/chainhash"
 	"github.com/decred/dcrd/wire"
+	"github.com/decred/go-socks/socks"
 	"github.com/decred/gominer/util"
 	"github.com/decred/gominer/work"
 )
@@ -70,7 +70,7 @@ type Config struct {
 	Version   string
 }
 
-// NotifyWork holds all the info recieved from a mining.notify message along
+// NotifyWork holds all the info received from a mining.notify message along
 // with the Work data generate from it.
 type NotifyWork struct {
 	Clean             bool
@@ -849,7 +849,7 @@ func (s *Stratum) PrepWork() error {
 		log.Error("Error decoding ExtraNonce2.")
 		return err
 	}
-	extraNonce := append(en1[:], en2[:]...)
+	extraNonce := append(en1, en2...)
 
 	// Put coinbase transaction together.
 	cb1, err := hex.DecodeString(s.PoolWork.CB1)

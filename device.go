@@ -351,7 +351,6 @@ func (d *Device) UpdateFanTemp() {
 			fanPercent, temperature := deviceStats(d.index)
 			atomic.StoreUint32(&d.fanPercent, fanPercent)
 			atomic.StoreUint32(&d.temperature, temperature)
-			break
 		}
 	}
 }

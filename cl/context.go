@@ -57,8 +57,7 @@ func init() {
 
 //export go_ctx_notify
 func go_ctx_notify(errinfo *C.char, private_info unsafe.Pointer, cb C.int, user_data unsafe.Pointer) {
-	var c_user_data []unsafe.Pointer
-	c_user_data = *(*[]unsafe.Pointer)(user_data)
+	c_user_data := *(*[]unsafe.Pointer)(user_data)
 	ctx_notify[c_user_data[1]](C.GoString(errinfo), private_info, int(cb), c_user_data[0])
 }
 

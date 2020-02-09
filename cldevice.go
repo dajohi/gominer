@@ -139,12 +139,10 @@ func fanControlSet(index int, fanCur uint32, tempTargetType string,
 	case TargetLower:
 		fanNewPercent = fanCur + fanAdjustmentPercent
 		fanNewValue = amdgpuFanPercentToValue(fanNewPercent)
-		break
 	// Increase the temperature by decreasing the fan speed
 	case TargetHigher:
 		fanNewPercent = fanCur - fanAdjustmentPercent
 		fanNewValue = amdgpuFanPercentToValue(fanNewPercent)
-		break
 	}
 
 	fanPath := amdgpuGetSysfsPath(index, "fan")
@@ -179,14 +177,11 @@ func loadProgramSource(filename string) ([][]byte, []cl.CL_size_t, error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	str := string(buf.Bytes())
-	programFinal := []byte(str)
+	programFinal := buf.Bytes()
 
 	programSize[0] = cl.CL_size_t(len(programFinal))
 	programBuffer[0] = make([]byte, programSize[0])
-	for i := range programFinal {
-		programBuffer[0][i] = programFinal[i]
-	}
+	copy(programBuffer[0], programFinal)
 
 	return programBuffer[:], programSize[:], nil
 }
@@ -207,7 +202,6 @@ type Device struct {
 
 	sync.Mutex
 	index int
-	cuda  bool
 
 	// Items for OpenCL device
 	platformID               cl.CL_platform_id
@@ -225,10 +219,6 @@ type Device struct {
 	fanTempActive            bool
 	kind                     string
 	tempTarget               uint32
-
-	//cuInput        cu.DevicePtr
-	cuInSize       int64
-	cuOutputBuffer []float64
 
 	workSize uint32
 
@@ -275,7 +265,6 @@ func determineDeviceKind(index int, deviceType string) string {
 				deviceKind = DeviceKindAMDGPU
 			}
 		}
-		break
 	}
 
 	return deviceKind
@@ -446,7 +435,7 @@ func NewDevice(index int, order int, platformID cl.CL_platform_id, deviceID cl.C
 	}
 
 	// Create the program.
-	d.program = cl.CLCreateProgramWithSource(d.context, 1, progSrc[:],
+	d.program = cl.CLCreateProgramWithSource(d.context, 1, progSrc,
 		progSize[:], &status)
 	if status != cl.CL_SUCCESS {
 		return nil, clError(status, "CLCreateProgramWithSource")
@@ -561,7 +550,6 @@ func NewDevice(index int, order int, platformID cl.CL_platform_id, deviceID cl.C
 			atomic.StoreUint32(&d.temperature, temperature)
 			d.fanTempActive = true
 		}
-		break
 	}
 
 	// Check if temperature target is specified

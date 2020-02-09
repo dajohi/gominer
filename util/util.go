@@ -82,7 +82,7 @@ func DiffToTarget(diff float64, powLimit *big.Int) (*big.Int, error) {
 // hashes, since the first byte is reserved for the ID.
 func RolloverExtraNonce(v *uint32) {
 	if *v&0x00FFFFFF == 0x00FFFFFF {
-		*v = *v & 0xFF000000
+		*v &= 0xFF000000
 	} else {
 		*v++
 	}
