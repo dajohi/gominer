@@ -177,14 +177,11 @@ func loadProgramSource(filename string) ([][]byte, []cl.CL_size_t, error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	str := buf.String()
-	programFinal := []byte(str)
+	programFinal := buf.Bytes()
 
 	programSize[0] = cl.CL_size_t(len(programFinal))
 	programBuffer[0] = make([]byte, programSize[0])
-	for i := range programFinal {
-		programBuffer[0][i] = programFinal[i]
-	}
+	copy(programBuffer[0], programFinal)
 
 	return programBuffer[:], programSize[:], nil
 }
@@ -444,7 +441,7 @@ func NewDevice(index int, order int, platformID cl.CL_platform_id, deviceID cl.C
 
 	// Create the program.
 	d.program = cl.CLCreateProgramWithSource(d.context, 1, progSrc,
-		progSize[:], &status)
+		progSize, &status)
 	if status != cl.CL_SUCCESS {
 		return nil, clError(status, "CLCreateProgramWithSource")
 	}

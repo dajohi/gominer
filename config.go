@@ -135,16 +135,6 @@ func normalizeAddresses(addrs []string, defaultPort string) []string {
 	return removeDuplicateAddresses(addrs)
 }
 
-// filesExists reports whether the named file or directory exists.
-func fileExists(name string) bool {
-	if _, err := os.Stat(name); err != nil {
-		if os.IsNotExist(err) {
-			return false
-		}
-	}
-	return true
-}
-
 // validLogLevel returns whether or not logLevel is a valid debug log level.
 func validLogLevel(logLevel string) bool {
 	_, ok := slog.LevelFromString(logLevel)

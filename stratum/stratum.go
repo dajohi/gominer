@@ -70,7 +70,7 @@ type Config struct {
 	Version   string
 }
 
-// NotifyWork holds all the info recieved from a mining.notify message along
+// NotifyWork holds all the info received from a mining.notify message along
 // with the Work data generate from it.
 type NotifyWork struct {
 	Clean             bool
@@ -283,7 +283,7 @@ func (s *Stratum) Listen() {
 	for {
 		result, err := s.Reader.ReadString('\n')
 		if err != nil {
-			if err == io.EOF {
+			if errors.Is(err, io.EOF) {
 				log.Error("Connection lost!  Reconnecting.")
 				err = s.Reconnect()
 				if err != nil {
@@ -849,7 +849,7 @@ func (s *Stratum) PrepWork() error {
 		log.Error("Error decoding ExtraNonce2.")
 		return err
 	}
-	extraNonce := append(en1[:], en2[:]...)
+	extraNonce := append(en1, en2...)
 
 	// Put coinbase transaction together.
 	cb1, err := hex.DecodeString(s.PoolWork.CB1)

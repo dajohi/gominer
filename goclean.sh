@@ -12,4 +12,5 @@ set -ex
 # check linters
 golangci-lint run --build-tags opencl --disable-all --deadline=10m \
   --enable=gofmt \
+  --enable=gosimple \
   --enable=ineffassign

@@ -21,12 +21,11 @@ func CLCreateImage2D(context CL_context,
 
 	var c_image_format C.cl_image_format
 	var c_errcode_ret C.cl_int
-	var c_image C.cl_mem
 
 	c_image_format.image_channel_order = C.cl_channel_order(image_format.Image_channel_order)
 	c_image_format.image_channel_data_type = C.cl_channel_type(image_format.Image_channel_data_type)
 
-	c_image = C.clCreateImage2D(context.cl_context,
+	c_image := C.clCreateImage2D(context.cl_context,
 		C.cl_mem_flags(flags),
 		&c_image_format,
 		C.size_t(image_width),
@@ -55,12 +54,11 @@ func CLCreateImage3D(context CL_context,
 
 	var c_image_format C.cl_image_format
 	var c_errcode_ret C.cl_int
-	var c_image C.cl_mem
 
 	c_image_format.image_channel_order = C.cl_channel_order(image_format.Image_channel_order)
 	c_image_format.image_channel_data_type = C.cl_channel_type(image_format.Image_channel_data_type)
 
-	c_image = C.clCreateImage3D(context.cl_context,
+	c_image := C.clCreateImage3D(context.cl_context,
 		C.cl_mem_flags(flags),
 		&c_image_format,
 		C.size_t(image_width),
