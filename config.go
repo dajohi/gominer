@@ -14,10 +14,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jessevdk/go-flags"
 	"github.com/decred/dcrd/chaincfg"
 	"github.com/decred/dcrd/dcrutil"
 	"github.com/decred/slog"
+	"github.com/jessevdk/go-flags"
 )
 
 const (
